@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pedido de Desculpas</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+
+  body {
+    background-color: #1a1a1a;
+    color: #f0e6f6;
+    font-family: 'Indie Flower', cursive, monospace;
+    font-size: 22px;
+    padding: 30px;
+    overflow: hidden;
+    position: relative;
+    height: 100vh;
+  }
+
+  #terminal {
+    white-space: pre-wrap;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 1.5;
+    z-index: 10;
+    position: relative;
+  }
+
+  .cursor {
+    display: inline-block;
+    width: 10px;
+    background-color: #f0e6f6;
+    animation: blink 0.8s infinite;
+  }
+
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+  }
+
+  /* Corações flutuantes */
+  .heart {
+    position: fixed;
+    bottom: -50px;
+    width: 30px;
+    height: 30px;
+    background: url('data:image/svg+xml;utf8,<svg fill="pink" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat center;
+    background-size: contain;
+    animation: floatUp linear forwards;
+    opacity: 0.8;
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  @keyframes floatUp {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateY(-120vh) scale(1.5);
+      opacity: 0;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="terminal"></div><span class="cursor"></span>
+
+<audio id="musica" loop autoplay>
+  <source src="https://cdn.pixabay.com/download/audio/2022/02/10/audio_0d5c1a0b0d.mp3?filename=soft-piano-ambient-7437.mp3" type="audio/mpeg" />
+  Seu navegador não suporta áudio.
+</audio>
+
+<script>
+const mensagem = `💌 Oi... sei que errei.
+Mas queria que soubesse que me importo muito com você.
+Você é especial pra mim.
+Será que a gente pode conversar? 💌`;
+
+let i = 0;
+const terminal = document.getElementById("terminal");
+
+function digitar() {
+  if (i < mensagem.length) {
+    terminal.innerHTML += mensagem.charAt(i);
+    i++;
+    setTimeout(digitar, 60);
+  }
+}
+digitar();
+
+// Função para criar corações flutuantes
+function criarCoracao() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (5 + Math.random() * 5) + "s";
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 10000);
+}
+
+// Criar corações em intervalos
+setInterval(criarCoracao, 500);
+</script>
+
+</body>
+</html>
